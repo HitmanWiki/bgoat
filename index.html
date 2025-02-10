@@ -2089,7 +2089,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <audio id="sound" src="goat.mp3" autoplay loop></audio>
+                                <audio id="sound" src="goat.mp3" loop></audio>
 
                                 <style>
                                     .sound-control {
@@ -2113,12 +2113,18 @@
                                     }
                                 </style>
 
-                                <button class="sound-control" id="soundToggle" onclick="toggleSound()">⏸️</button>
+                                <button class="sound-control" id="soundToggle" onclick="toggleSound()">▶️</button>
 
                                 <script>
                                     document.addEventListener("DOMContentLoaded", function () {
                                         let sound = document.getElementById("sound");
-                                        sound.play().catch(error => console.log("Autoplay blocked by browser", error));
+                                        let button = document.getElementById("soundToggle");
+
+                                        if (localStorage.getItem("soundState") === "playing") {
+                                            sound.play().then(() => {
+                                                button.innerHTML = "⏸️";
+                                            }).catch(error => console.log("Autoplay blocked by browser", error));
+                                        }
                                     });
 
                                     function toggleSound() {
@@ -2126,13 +2132,17 @@
                                         let button = document.getElementById("soundToggle");
                                         if (sound.paused) {
                                             sound.play();
-                                            button.innerHTML = "⏸️"; // Pause icon
+                                            button.innerHTML = "⏸️";
+                                            localStorage.setItem("soundState", "playing");
                                         } else {
                                             sound.pause();
-                                            button.innerHTML = "▶️"; // Play icon
+                                            button.innerHTML = "▶️";
+                                            localStorage.setItem("soundState", "paused");
                                         }
                                     }
                                 </script>
+
+
 
 
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-43bfe05f"
