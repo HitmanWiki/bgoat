@@ -2105,27 +2105,47 @@
                                         cursor: pointer;
                                         border-radius: 50px;
                                         transition: background-color 0.3s;
+                                        display: none;
                                     }
 
                                     .sound-control:hover {
                                         background-color: #e6c200;
                                         /* Slightly darker yellow for hover effect */
                                     }
+
+                                    .overlay {
+                                        position: fixed;
+                                        top: 0;
+                                        left: 0;
+                                        width: 100%;
+                                        height: 100%;
+                                        background: rgba(0, 0, 0, 0.8);
+                                        display: flex;
+                                        justify-content: center;
+                                        align-items: center;
+                                        color: white;
+                                        font-size: 24px;
+                                        cursor: pointer;
+                                    }
                                 </style>
 
-                                <button class="sound-control" id="soundToggle" onclick="toggleSound()">▶️</button>
+                                <div class="overlay" id="overlay" onclick="enableSound()">Click to Enter</div>
+                                <button class="sound-control" id="soundToggle" onclick="toggleSound()">⏸️</button>
 
                                 <script>
-                                    document.addEventListener("DOMContentLoaded", function () {
+                                    function enableSound() {
                                         let sound = document.getElementById("sound");
+                                        let overlay = document.getElementById("overlay");
                                         let button = document.getElementById("soundToggle");
 
-                                        if (localStorage.getItem("soundState") === "playing") {
-                                            sound.play().then(() => {
-                                                button.innerHTML = "⏸️";
-                                            }).catch(error => console.log("Autoplay blocked by browser", error));
-                                        }
-                                    });
+                                        sound.play().then(() => {
+                                            button.style.display = "block";
+                                            overlay.style.display = "none";
+                                            button.innerHTML = "⏸️";
+                                        }).catch(error => {
+                                            console.log("Autoplay blocked by browser", error);
+                                        });
+                                    }
 
                                     function toggleSound() {
                                         let sound = document.getElementById("sound");
@@ -2133,15 +2153,12 @@
                                         if (sound.paused) {
                                             sound.play();
                                             button.innerHTML = "⏸️";
-                                            localStorage.setItem("soundState", "playing");
                                         } else {
                                             sound.pause();
                                             button.innerHTML = "▶️";
-                                            localStorage.setItem("soundState", "paused");
                                         }
                                     }
                                 </script>
-
 
 
 
