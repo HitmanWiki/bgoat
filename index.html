@@ -2089,6 +2089,52 @@
                                         </div>
                                     </div>
                                 </div>
+                                <audio id="sound" src="goat.mp3" autoplay loop></audio>
+
+                                <style>
+                                    .sound-control {
+                                        position: fixed;
+                                        bottom: 20px;
+                                        right: 20px;
+                                        padding: 10px 20px;
+                                        font-size: 16px;
+                                        border: none;
+                                        background-color: #ffd700;
+                                        /* Yellow color */
+                                        color: black;
+                                        cursor: pointer;
+                                        border-radius: 50px;
+                                        transition: background-color 0.3s;
+                                    }
+
+                                    .sound-control:hover {
+                                        background-color: #e6c200;
+                                        /* Slightly darker yellow for hover effect */
+                                    }
+                                </style>
+
+                                <button class="sound-control" id="soundToggle" onclick="toggleSound()">⏸️</button>
+
+                                <script>
+                                    document.addEventListener("DOMContentLoaded", function () {
+                                        let sound = document.getElementById("sound");
+                                        sound.play().catch(error => console.log("Autoplay blocked by browser", error));
+                                    });
+
+                                    function toggleSound() {
+                                        let sound = document.getElementById("sound");
+                                        let button = document.getElementById("soundToggle");
+                                        if (sound.paused) {
+                                            sound.play();
+                                            button.innerHTML = "⏸️"; // Pause icon
+                                        } else {
+                                            sound.pause();
+                                            button.innerHTML = "▶️"; // Play icon
+                                        }
+                                    }
+                                </script>
+
+
                                 <div class="elementor-column elementor-col-33 elementor-inner-column elementor-element elementor-element-43bfe05f"
                                     data-id="43bfe05f" data-element_type="column">
                                     <div class="elementor-widget-wrap elementor-element-populated">
